@@ -14,7 +14,7 @@ namespace GradeBook.GradeBooks
         public override char GetLetterGrade(double averageGrade)
         {
             if (Students.Count < 5)
-                throw new InvalidOperationException("Rankked grading requires at least 5 studendts.");
+                throw new InvalidOperationException("Ranked grading requires at least 5 studendts.");
 
             var threshold = (int)Math.Ceiling(Students.Count * 0.2);
             var grades = Students.OrderByDescending(e => e.AverageGrade).Select(e => e.AverageGrade).ToList();
@@ -34,7 +34,11 @@ namespace GradeBook.GradeBooks
         public override void CalculateStatistics()
         {
             if (Students.Count < 5)
-                throw new InvalidOperationException("Ranked grading requires at least 5 students.");
+            {
+                Console.WriteLine("Ranked grading requires at least 5 Students.");
+                return;
+            }
+                
 
             base.CalculateStatistics();
         }
@@ -42,7 +46,10 @@ namespace GradeBook.GradeBooks
         public override void CalculateStudentStatistics(string name)
         {
             if (Students.Count < 5)
-                throw new InvalidOperationException("Ranked grading requires at least 5 students.");
+            {
+                Console.WriteLine("Ranked grading requires at least 5 Students.");
+                return;
+            }
 
             base.CalculateStudentStatistics(name);
         }
