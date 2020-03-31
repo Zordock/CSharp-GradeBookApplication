@@ -24,7 +24,7 @@ namespace GradeBook.GradeBooks
             IsWeighted = isWeighted;
     }
 
-        public void AddStudent(Student student, bool isWeighted)
+        public void AddStudent(Student student)
         {
             if (string.IsNullOrEmpty(student.Name))
                 throw new ArgumentException("A Name is required to add a student to a gradebook.");

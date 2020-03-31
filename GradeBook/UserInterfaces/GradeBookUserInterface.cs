@@ -12,6 +12,7 @@ namespace GradeBook.UserInterfaces
         {
             GradeBook = gradeBook;
             Quit = false;
+            bool isWeighted = gradeBook.IsWeighted;
 
             Console.WriteLine("#=======================#");
             Console.WriteLine(GradeBook.Name + " : " + GradeBook.GetType().Name);
@@ -22,13 +23,13 @@ namespace GradeBook.UserInterfaces
                 Console.WriteLine(string.Empty);
                 Console.WriteLine(">> What would you like to do?");
                 var command = Console.ReadLine().ToLower();
-                CommandRoute(command);
+                CommandRoute(command, isWeighted);
             }
 
             Console.WriteLine(GradeBook.Name + " has been closed.");
         }
 
-        public static void CommandRoute(string command)
+        public static void CommandRoute(string command, bool isWeighted)
         {
             if (command == "save")
                 SaveCommand();
@@ -43,9 +44,9 @@ namespace GradeBook.UserInterfaces
             else if (command == "list")
                 ListCommand();
             else if (command == "statistics all")
-                StatisticsCommand();
+                StatisticsCommand(isWeighted);
             else if (command.StartsWith("statistics"))
-                StudentStatisticsCommand(command);
+                StudentStatisticsCommand(command, isWeighted);
             else if (command == "help")
                 HelpCommand();
             else if (command == "close")
@@ -135,12 +136,12 @@ namespace GradeBook.UserInterfaces
             GradeBook.ListStudents();
         }
         
-        public static void StatisticsCommand()
+        public static void StatisticsCommand(bool isWeighted)
         {
-            GradeBook.CalculateStatistics();
+            GradeBook.CalculateStatistics(isWeighted);
         }
 
-        public static void StudentStatisticsCommand(string command)
+        public static void StudentStatisticsCommand(string command, bool isWeighted)
         {
             var parts = command.Split(' ');
             if (parts.Length != 2)
@@ -149,7 +150,7 @@ namespace GradeBook.UserInterfaces
                 return;
             }
             var name = parts[1];
-            GradeBook.CalculateStudentStatistics(name);
+            GradeBook.CalculateStudentStatistics(name, isWeighted);
         }
 
         public static void HelpCommand()
