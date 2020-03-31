@@ -24,7 +24,7 @@ namespace GradeBook.GradeBooks
             IsWeighted = isWeighted;
     }
 
-        public void AddStudent(Student student)
+        public void AddStudent(Student student, bool isWeighted)
         {
             if (string.IsNullOrEmpty(student.Name))
                 throw new ArgumentException("A Name is required to add a student to a gradebook.");
@@ -147,7 +147,7 @@ namespace GradeBook.GradeBooks
             return 0;
         }
 
-        public virtual void CalculateStatistics()
+        public virtual void CalculateStatistics(bool isWeighted)
         {
             var allStudentsPoints = 0d;
             var campusPoints = 0d;
@@ -157,11 +157,12 @@ namespace GradeBook.GradeBooks
             var standardPoints = 0d;
             var honorPoints = 0d;
             var dualEnrolledPoints = 0d;
+            
 
             foreach (var student in Students)
             {
                 student.LetterGrade = GetLetterGrade(student.AverageGrade);
-                student.GPA = GetGPA(student.LetterGrade, student.Type);
+                student.GPA = GetGPA(student.LetterGrade, student.Type, isWeighted);
 
                 Console.WriteLine("{0} ({1}:{2}) GPA: {3}.", student.Name, student.LetterGrade, student.AverageGrade, student.GPA);
                 allStudentsPoints += student.AverageGrade;
@@ -214,11 +215,11 @@ namespace GradeBook.GradeBooks
                 Console.WriteLine("Average for only dual enrolled students is " + (dualEnrolledPoints / Students.Where(e => e.Type == StudentType.DualEnrolled).Count()));
         }
 
-        public virtual void CalculateStudentStatistics(string name)
+        public virtual void CalculateStudentStatistics(string name, bool isWeighted)
         {
             var student = Students.FirstOrDefault(e => e.Name == name);
             student.LetterGrade = GetLetterGrade(student.AverageGrade);
-            student.GPA = GetGPA(student.LetterGrade, student.Type);
+            student.GPA = GetGPA(student.LetterGrade, student.Type, isWeighted);
 
             Console.WriteLine("{0} ({1}:{2}) GPA: {3}.", student.Name, student.LetterGrade, student.AverageGrade, student.GPA);
             Console.WriteLine();

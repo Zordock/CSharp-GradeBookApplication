@@ -31,7 +31,7 @@ namespace GradeBook.GradeBooks
                 return 'F';
         }
 
-        public override void CalculateStatistics()
+        public override void CalculateStatistics(bool isWeighted)
         {
             if (Students.Count < 5)
             {
@@ -40,10 +40,10 @@ namespace GradeBook.GradeBooks
             }
                 
 
-            base.CalculateStatistics();
+            base.CalculateStatistics(isWeighted);
         }
 
-        public override void CalculateStudentStatistics(string name)
+        public override void CalculateStudentStatistics(string name, bool isWeighted)
         {
             if (Students.Count < 5)
             {
@@ -51,7 +51,7 @@ namespace GradeBook.GradeBooks
                 return;
             }
 
-            base.CalculateStudentStatistics(name);
+            base.CalculateStudentStatistics(name, isWeighted);
         }
     }
 }
