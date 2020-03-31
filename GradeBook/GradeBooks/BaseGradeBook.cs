@@ -108,46 +108,45 @@ namespace GradeBook.GradeBooks
             }
         }
 
-        public virtual double GetGPA(char letterGrade, StudentType studentType, bool isWeighted)
+        public virtual double GetGPA(char letterGrade, StudentType studentType)
         {
             var grade = 0;
 
-            if (isWeighted && (studentType.ToString() == "Honors" || studentType.ToString() == "DualEnrolled"))
+            if (IsWeighted && (studentType.ToString() == "Honors" || studentType.ToString() == "DualEnrolled"))
                 grade++;
 
             switch (letterGrade)
             {
                 case 'A':
-                        {
-                            grade += 4;
-                            return grade;
+                    grade += 4;
+                    break;
                         
-                        }
-                    case 'B':
-                        {
-                            grade += 3;
-                            return grade;
-                        }
-                    case 'C':
-                        {
-                            grade += 2;
-                            return grade;
-                        }
-                    case 'D':
-                        {
-                            grade += 1;
-                            return grade;
-                        }
-                    case 'F':
-                        {
-                            return grade;
-                        }
+                case 'B':
+                        
+                    grade += 3;
+                    break;
+                    
+                case 'C':
+                        
+                    grade += 2;
+                    break;
+                    
+                case 'D':
+                       
+                    grade += 1;
+                    break;
+                    
+                case 'F':
+                        
+                    break;
+                    
+
                     
             }
-            return 0;
+            return grade;
         }
 
-        public virtual void CalculateStatistics(bool isWeighted)
+        public virtual void CalculateStatistics()
         {
             var allStudentsPoints = 0d;
             var campusPoints = 0d;
@@ -162,7 +161,7 @@ namespace GradeBook.GradeBooks
             foreach (var student in Students)
             {
                 student.LetterGrade = GetLetterGrade(student.AverageGrade);
-                student.GPA = GetGPA(student.LetterGrade, student.Type, isWeighted);
+                student.GPA = GetGPA(student.LetterGrade, student.Type);
 
                 Console.WriteLine("{0} ({1}:{2}) GPA: {3}.", student.Name, student.LetterGrade, student.AverageGrade, student.GPA);
                 allStudentsPoints += student.AverageGrade;
@@ -215,11 +214,11 @@ namespace GradeBook.GradeBooks
                 Console.WriteLine("Average for only dual enrolled students is " + (dualEnrolledPoints / Students.Where(e => e.Type == StudentType.DualEnrolled).Count()));
         }
 
-        public virtual void CalculateStudentStatistics(string name, bool isWeighted)
+        public virtual void CalculateStudentStatistics(string name)
         {
             var student = Students.FirstOrDefault(e => e.Name == name);
             student.LetterGrade = GetLetterGrade(student.AverageGrade);
-            student.GPA = GetGPA(student.LetterGrade, student.Type, isWeighted);
+            student.GPA = GetGPA(student.LetterGrade, student.Type);
 
             Console.WriteLine("{0} ({1}:{2}) GPA: {3}.", student.Name, student.LetterGrade, student.AverageGrade, student.GPA);
             Console.WriteLine();

@@ -23,13 +23,13 @@ namespace GradeBook.UserInterfaces
                 Console.WriteLine(string.Empty);
                 Console.WriteLine(">> What would you like to do?");
                 var command = Console.ReadLine().ToLower();
-                CommandRoute(command, isWeighted);
+                CommandRoute(command);
             }
 
             Console.WriteLine(GradeBook.Name + " has been closed.");
         }
 
-        public static void CommandRoute(string command, bool isWeighted)
+        public static void CommandRoute(string command)
         {
             if (command == "save")
                 SaveCommand();
@@ -44,9 +44,9 @@ namespace GradeBook.UserInterfaces
             else if (command == "list")
                 ListCommand();
             else if (command == "statistics all")
-                StatisticsCommand(isWeighted);
+                StatisticsCommand();
             else if (command.StartsWith("statistics"))
-                StudentStatisticsCommand(command, isWeighted);
+                StudentStatisticsCommand(command);
             else if (command == "help")
                 HelpCommand();
             else if (command == "close")
@@ -136,12 +136,12 @@ namespace GradeBook.UserInterfaces
             GradeBook.ListStudents();
         }
         
-        public static void StatisticsCommand(bool isWeighted)
+        public static void StatisticsCommand()
         {
-            GradeBook.CalculateStatistics(isWeighted);
+            GradeBook.CalculateStatistics();
         }
 
-        public static void StudentStatisticsCommand(string command, bool isWeighted)
+        public static void StudentStatisticsCommand(string command)
         {
             var parts = command.Split(' ');
             if (parts.Length != 2)
@@ -150,7 +150,7 @@ namespace GradeBook.UserInterfaces
                 return;
             }
             var name = parts[1];
-            GradeBook.CalculateStudentStatistics(name, isWeighted);
+            GradeBook.CalculateStudentStatistics(name);
         }
 
         public static void HelpCommand()
